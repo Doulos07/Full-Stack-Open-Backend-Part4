@@ -26,3 +26,36 @@ describe("total likes", () => {
     assert.strictEqual(result, 5);
   });
 });
+
+describe("favoriteBlog", () => {
+  const favorite = {
+    title: "Canonical string reduction",
+    author: "Edsger W. Dijkstra",
+    likes: 12,
+  };
+
+  const blogs = [
+    {
+      title: "Clean Code",
+      author: "Robert C. Martin",
+      likes: 7,
+    },
+    {
+      title: "Refactoring UI",
+      author: "Martin Fowler",
+      likes: 10,
+    },
+    {
+      title: "Canonical string reduction",
+      author: "Edsger W. Dijkstra",
+      likes: 12,
+    },
+  ];
+
+  test("returns blog with most likes", () => {
+    const result = listHelper.favoriteBlog(blogs);
+    console.log("result", result);
+
+    assert.deepStrictEqual(favorite, result);
+  });
+});
