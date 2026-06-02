@@ -1,0 +1,9 @@
+POST  http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Moscato, pizza y fainá",
+    "author": "Canción de Memphis la Blusera",
+    "url": "https://open.spotify.com/intl-es/track/4sfnRgE0fJtQr09a8cU17H?si=1510216fd6bb4a3d",
+    "likes": 5
+}
