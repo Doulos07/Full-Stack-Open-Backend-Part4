@@ -1,0 +1,9 @@
+PUT  http://localhost:3001/api/blogs/6a1e38dd929b6985318b7fbd
+Content-Type: application/json
+
+{
+    "title": "¿Quién sabe?",
+    "author": "Julieta Rada, Las Pastillas del Abuelo y Ruben Rada",
+    "url": "https://open.spotify.com/track/397au4JiSlyIDmEkXfW2Mz?si=520ab5bb5e164a51",
+    "likes": 10
+}
