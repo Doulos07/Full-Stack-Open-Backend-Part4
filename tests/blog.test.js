@@ -1,5 +1,5 @@
 const assert = require("node:assert");
-const { test, describe, after, beforeEach } = require("node:test");
+const { test, after, beforeEach } = require("node:test");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
@@ -28,6 +28,25 @@ test("Validate the Blogs lathe without _id", async () => {
     Object.prototype.hasOwnProperty.call(blog, "_id"),
   );
   assert.strictEqual(has_id, false);
+});
+
+test("a valid blog can be added", async () => {
+  const newBlog = {
+    title: "Jijiji",
+    author: "Patricio Rey y sus Redonditos de Ricota",
+    url: "https://open.spotify.com/track/1tW6LiJGXGlReuNP38wrKb?si=6f9bbcd2ca4c439a",
+    likes: 20,
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogs = await helper.blogsInDb();
+
+  assert.strictEqual(blogs.length, helper.initialBlogs.length + 1);
 });
 
 after(async () => {
