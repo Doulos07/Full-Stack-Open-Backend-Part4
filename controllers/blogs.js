@@ -22,7 +22,6 @@ blogsRouter.get("/:id", (request, response, next) => {
 });
 
 blogsRouter.post("/", (request, response, next) => {
-  console.log(request.body);
   const blog = new Blog(request.body);
 
   blog

@@ -49,6 +49,22 @@ test("a valid blog can be added", async () => {
   assert.strictEqual(blogs.length, helper.initialBlogs.length + 1);
 });
 
+test("validate key likes", async () => {
+  const newBlog = {
+    title: "La Ultima Lagrima",
+    author: "Memphis la Blusera",
+    url: "https://open.spotify.com/track/0cHVi2rirbT62DlX3uabke?si=6a084c99fceb40b4",
+  };
+
+  const response = await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  assert.strictEqual(response.body.likes, 0);
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
