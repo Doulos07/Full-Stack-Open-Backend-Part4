@@ -65,6 +65,27 @@ test("validate key likes", async () => {
   assert.strictEqual(response.body.likes, 0);
 });
 
+test("validate title and url", async () => {
+  const newBlogUrl = {
+    title: "La Ultima Lagrima",
+    author: "Memphis la Blusera",
+  };
+
+  const newBlogTitle = {
+    author: "Memphis la Blusera",
+    url: "https://open.spotify.com/track/0cHVi2rirbT62DlX3uabke?si=6a084c99fceb40b4",
+  };
+
+  const responseUrl = await api.post("/api/blogs").send(newBlogUrl).expect(400);
+  const responseTitle = await api
+    .post("/api/blogs")
+    .send(newBlogTitle)
+    .expect(400);
+
+  assert(responseUrl.body.error.includes("url is required"));
+  assert(responseTitle.body.error.includes("title is required"));
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
