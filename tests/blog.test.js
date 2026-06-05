@@ -20,6 +20,16 @@ test("blogs are returned as json", async () => {
     .expect("Content-Type", /application\/json/);
 });
 
+test("Validate the Blogs lathe without _id", async () => {
+  const response = await api.get("/api/blogs");
+
+  // const has_id = response.body.some((blog) => blog.hasOwnProperty("_id")); -> ESLint -> Error | robustness problem
+  const has_id = response.body.some((blog) =>
+    Object.prototype.hasOwnProperty.call(blog, "_id"),
+  );
+  assert.strictEqual(has_id, false);
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
