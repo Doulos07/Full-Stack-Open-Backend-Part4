@@ -109,6 +109,38 @@ describe("blog api", () => {
       assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1);
     });
   });
+
+  describe("update of a blog", () => {
+    test("succeeds with status code 200 if id is valid", async () => {
+      const blogsAtStart = await helper.blogsInDb();
+      const blogToUpdate = blogsAtStart[0];
+
+      const updateBlog = {
+        title: blogToUpdate.title,
+        author: blogToUpdate.author,
+        url: blogToUpdate.url,
+        likes: 999,
+      };
+
+      const response = await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(updateBlog)
+        .expect(200)
+        .expect("Content-Type", /application\/json/);
+
+      assert.strictEqual(response.body.likes, 999);
+
+      const blogsAtEnd = await helper.blogsInDb();
+
+      const updatedBlog = blogsAtEnd.find(
+        (blog) => blog.id === blogToUpdate.id,
+      );
+
+      assert.strictEqual(updatedBlog.likes, 999);
+
+      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length);
+    });
+  });
 });
 
 after(async () => {
