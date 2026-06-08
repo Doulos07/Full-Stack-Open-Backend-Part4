@@ -1,10 +1,10 @@
 POST  http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlN0YXJrbG9yZCIsImlkIjoiNmEyNmVkMDJiZWJiZTlhZGFkYWVjZDZhIiwiaWF0IjoxNzgwOTM5NTIzfQ.z-ghPGUI5JXorvP8avH_nWrtEMEuW57XQdc-3ZTW8TA
 
 {
-    "title": "Moscato, pizza y fainá",
+    "title": "Moscato, pizza y fainá aaaaa",
     "author": "Memphis la Blusera",
     "url": "https://open.spotify.com/intl-es/track/4sfnRgE0fJtQr09a8cU17H?si=1510216fd6bb4a3d",
-    "likes": 5,
-    "userId": "6a26ed02bebbe9adadaecd6a"
+    "likes": 5
 }
