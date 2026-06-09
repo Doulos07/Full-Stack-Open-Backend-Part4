@@ -1,6 +1,6 @@
 POST  http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlN0YXJrbG9yZCIsImlkIjoiNmEyNmVkMDJiZWJiZTlhZGFkYWVjZDZhIiwiaWF0IjoxNzgwOTM5NTIzfQ.z-ghPGUI5JXorvP8avH_nWrtEMEuW57XQdc-3ZTW8TA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlN0YXJrbG9yZCIsImlkIjoiNmEyODE0M2ZmZWUxM2Q5YTVmMGRiNTE2IiwiaWF0IjoxNzgxMDExNTY4fQ.1Uj3F5SeoqEZ2V3Wrhx4LPcon2G31H-hQ0ywGxRrI7s
 
 {
     "title": "Moscato, pizza y fainá aaaaa",
