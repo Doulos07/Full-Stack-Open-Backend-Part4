@@ -2,16 +2,33 @@ const assert = require("node:assert");
 const { test, after, beforeEach, describe } = require("node:test");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
+const jwt = require("jsonwebtoken");
 const app = require("../app");
 const Blog = require("../models/blogs");
+const User = require("../models/users");
 const helper = require("./test_helper");
 
 const api = supertest(app);
 
 describe("blog api", () => {
+  let token;
+
   beforeEach(async () => {
+    await User.deleteMany({});
+    await api.post("/api/users").send(helper.initialUSers[0]);
+    const loginResponse = await api.post("/api/login").send({
+      username: "santiago",
+      password: "mickey18",
+    });
+
+    token = loginResponse.body.token;
+    const decodedToken = jwt.verify(token, process.env.SECRET);
     await Blog.deleteMany({});
-    await Promise.all(helper.initialBlogs.map((blog) => new Blog(blog).save()));
+    helper.initialBlogs = helper.initialBlogs.map((blog) => ({
+      ...blog,
+      user: decodedToken.id,
+    }));
+    await Blog.insertMany(helper.initialBlogs);
   });
 
   describe("validating format", () => {
@@ -44,6 +61,7 @@ describe("blog api", () => {
 
       await api
         .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect("Content-Type", /application\/json/);
@@ -62,6 +80,7 @@ describe("blog api", () => {
 
       const response = await api
         .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect("Content-Type", /application\/json/);
@@ -82,10 +101,12 @@ describe("blog api", () => {
 
       const responseUrl = await api
         .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
         .send(newBlogUrl)
         .expect(400);
       const responseTitle = await api
         .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
         .send(newBlogTitle)
         .expect(400);
 
@@ -99,7 +120,10 @@ describe("blog api", () => {
       const blogsAtStart = await helper.blogsInDb();
       const blogToDelete = blogsAtStart[0];
 
-      await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+      await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(204);
 
       const blogsAtEnd = await helper.blogsInDb();
 
